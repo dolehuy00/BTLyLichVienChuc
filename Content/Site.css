@@ -1,0 +1,33 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.specific-input::-webkit-inner-spin-button,
+.specific-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+.specific-input {
+    -moz-appearance: textfield;
+}
+
+.indented-text {
+    padding-left: 20px;
+}
+
+.container-textarea textarea{
+    margin-bottom: 10px
+}
+
+.btn-gender{
+    width: 50px
+}

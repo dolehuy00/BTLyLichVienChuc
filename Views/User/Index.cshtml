@@ -1,0 +1,12 @@
+﻿@model LyLichVienChuc.Models.User
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@using (Html.BeginForm("Index", "User", "post"))
+{
+    @Html.EditorFor(m => m.Id)
+    @Html.EditorFor(m => m.Name)
+}
+
