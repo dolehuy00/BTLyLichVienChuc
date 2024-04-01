@@ -7,10 +7,53 @@ $(document).ready(function () {
     addEventAddAndDeleteRowForTable('table-27', 'btn-insert-table-27', 'wrapper-table-27', 5, 'textarea');
 
 
-    var button = document.getElementById('send');
-    button.addEventListener('click', function () {
-        submitForm();
+    // Ảnh thẻ
+    var input = document.getElementById('input-anh-the');
+    var img = document.getElementById('img-anh-the');
+    var imageBase64 = ''
+    img.addEventListener("click", function (event) {
+        event.preventDefault();
+        input.click();
     });
+    input.addEventListener('change', function (event) {
+        var selectedFile = event.target.files[0];
+        if (selectedFile) {
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                var imageUrl = event.target.result;
+                img.src = imageUrl;
+                imageBase64 = reader.result.split(',')[1];
+            };
+            reader.readAsDataURL(selectedFile);
+        }
+    });
+
+    // submit form
+    document.getElementById("form-ly-lich-vien-chuc").addEventListener("submit", function (event) {
+        event.preventDefault();
+        var img = document.getElementById('img-anh-the');
+        if (imageBase64 === '') {
+            img.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+            img.style.border = "3px solid red";
+        } else {
+            img.style.border = "2px solid gray";
+            submitForm(imageBase64);
+        }
+    });
+    // ô nhập tên
+    document.getElementById('ho-ten-khai-sinh').addEventListener('input', function (event) {
+        // Chuyển đổi giá trị của ô input thành chữ in hoa
+        this.value = this.value.toUpperCase();
+    });
+
+    // nhập địa chỉ
+    var tinh_tp = document.getElementById("tinh-noi-sinh");
+    var quan_huyen = document.getElementById("huyen-noi-sinh");
+    var xa_phuong = document.getElementById("xa-noi-sinh");
+    
 });
 
 
@@ -21,7 +64,7 @@ function addEventAddAndDeleteRowForTable(tableId, btnInsertId, wraperId, colData
     // Select the table
     var table31 = document.getElementById(tableId);
     var buttonInsert31 = document.getElementById(btnInsertId);
-    var wrapperTable31 = document.getElementById(wraperId);
+    //var wrapperTable31 = document.getElementById(wraperId);
 
     // Add the onclick event listener to the button
     buttonInsert31.addEventListener('click', function () {
@@ -33,6 +76,7 @@ function addEventAddAndDeleteRowForTable(tableId, btnInsertId, wraperId, colData
             var newInput = document.createElement(inputElement);
             //newInput.type = 'text';
             newInput.className = 'form-control';
+            newInput.required = true;
             newCell.appendChild(newInput);
             newRow.appendChild(newCell);
         }
@@ -54,17 +98,17 @@ function addEventAddAndDeleteRowForTable(tableId, btnInsertId, wraperId, colData
         table31.getElementsByTagName('tbody')[0].appendChild(newRow);
     });
 
-    // Add the mouseenter event listener to the wrapper
-    wrapperTable31.addEventListener('mouseenter', function () {
-        table31.style.marginBottom = '2px'
-        buttonInsert31.style.display = 'unset';
-    });
+    //// Add the mouseenter event listener to the wrapper
+    //wrapperTable31.addEventListener('mouseenter', function () {
+    //    table31.style.marginBottom = '2px'
+    //    buttonInsert31.style.display = 'unset';
+    //});
 
-    // Add the mouseleave event listener to the wrapper
-    wrapperTable31.addEventListener('mouseleave', function () {
-        table31.style.marginBottom = 'revert-layer'
-        buttonInsert31.style.display = 'none';
-    });
+    //// Add the mouseleave event listener to the wrapper
+    //wrapperTable31.addEventListener('mouseleave', function () {
+    //    table31.style.marginBottom = 'revert-layer'
+    //    buttonInsert31.style.display = 'none';
+    //});
 }
 
 function tabel31DataToJson(tableId) {
@@ -139,8 +183,10 @@ function tabel30DataToJson(tableId, laTTQHGDCuaBanThan) {
     return dataTable;
 }
 
-function submitForm() {
+
+function submitForm(imgBase64) {
     var data = {
+        "anhThe": imgBase64,
         "coQuanQuanLy": document.getElementById('co-quan-quan-ly').value,
         "coQuanSuDung": document.getElementById('don-vi-su-dung-vien-chuc').value,
         "soHieuVienChuc": document.getElementById('so-hieu-vien-chuc').value,
@@ -210,7 +256,7 @@ function submitForm() {
     }
 
     $.ajax({
-        url: '',
+        url: '/api/VienChucApi',
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(data),

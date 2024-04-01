@@ -31,3 +31,12 @@
 .btn-gender{
     width: 50px
 }
+
+#table-31, #table-30a, #table-30b, #table-28, #table-27{
+    margin-bottom: 2px;
+}
+
+.image-placeholder {
+    width: 4cm;
+    border: 2px solid gray;
+}
