@@ -93,10 +93,11 @@ C:\Users\PC\Desktop\LyLichVienChuc\bin\System.Web.Helpers.xml
 C:\Users\PC\Desktop\LyLichVienChuc\bin\System.Web.Mvc.xml
 C:\Users\PC\Desktop\LyLichVienChuc\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Users\PC\Desktop\LyLichVienChuc\obj\Debug\LyLichVienChuc.csproj.AssemblyReference.cache
-C:\Users\PC\Desktop\LyLichVienChuc\obj\Debug\LyLichVienChuc.Migrations.InitialCreate.resources
-C:\Users\PC\Desktop\LyLichVienChuc\obj\Debug\LyLichVienChuc.Migrations.TenMigration.resources
-C:\Users\PC\Desktop\LyLichVienChuc\obj\Debug\LyLichVienChuc.csproj.GenerateResource.cache
 C:\Users\PC\Desktop\LyLichVienChuc\obj\Debug\LyLichVienChuc.csproj.CoreCompileInputs.cache
 C:\Users\PC\Desktop\LyLichVienChuc\obj\Debug\LyLichVienChuc.csproj.CopyComplete
 C:\Users\PC\Desktop\LyLichVienChuc\obj\Debug\LyLichVienChuc.dll
 C:\Users\PC\Desktop\LyLichVienChuc\obj\Debug\LyLichVienChuc.pdb
+C:\Users\PC\Desktop\LyLichVienChuc\obj\Debug\LyLichVienChuc.Migrations.myMigration.resources
+C:\Users\PC\Desktop\LyLichVienChuc\obj\Debug\LyLichVienChuc.csproj.GenerateResource.cache
+C:\Users\PC\Desktop\LyLichVienChuc\bin\AutoMapper.dll
+C:\Users\PC\Desktop\LyLichVienChuc\bin\AutoMapper.xml

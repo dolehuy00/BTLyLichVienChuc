@@ -1,6 +1,6 @@
-﻿using LyLichVienChuc.Data;
+﻿using LyLichVienChuc.App_Start;
+using LyLichVienChuc.Data;
 using LyLichVienChuc.Models;
-using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
@@ -22,6 +22,7 @@ namespace LyLichVienChuc.Controllers
         }
 
         // GET: api/VienChucApi/5
+        [Route("api/VienChucApi/{id}")]
         [ResponseType(typeof(VienChuc))]
         public IHttpActionResult GetVienChuc(int id)
         {
@@ -36,6 +37,8 @@ namespace LyLichVienChuc.Controllers
 
         // PUT: api/VienChucApi/5
         [ResponseType(typeof(void))]
+        [HttpPut]
+        [Route("api/VienChucApi/{id}")]
         public IHttpActionResult PutVienChuc(int id, VienChuc vienChuc)
         {
             if (!ModelState.IsValid)
@@ -48,7 +51,22 @@ namespace LyLichVienChuc.Controllers
                 return BadRequest();
             }
 
-            db.Entry(vienChuc).State = EntityState.Modified;
+
+            var oldVienChuc = db.VienChucs.Find(id);
+
+            AutoMapperConfig.Mapper.Map(vienChuc, oldVienChuc);
+
+            db.QuaTrinhLuongs.RemoveRange(db.QuaTrinhLuongs.Where(q => q.VienChucId == id));
+            db.QuaTrinhLuongs.AddRange(vienChuc.DsQuaTrinhLuong);
+
+            db.QuanHeGiaDinhs.RemoveRange(db.QuanHeGiaDinhs.Where(q => q.VienChucId == id));
+            db.QuanHeGiaDinhs.AddRange(vienChuc.DsQuanHeGiaDinh);
+
+            db.QuaTrinhCongTacs.RemoveRange(db.QuaTrinhCongTacs.Where(q => q.VienChucId == id));
+            db.QuaTrinhCongTacs.AddRange(vienChuc.DsQuaTrinhCongTac);
+
+            db.ThongTinDaoTaoBoiDuongs.RemoveRange(db.ThongTinDaoTaoBoiDuongs.Where(q => q.VienChucId == id));
+            db.ThongTinDaoTaoBoiDuongs.AddRange(vienChuc.DsThongTinDaoTaoBoiDuong);
 
             try
             {

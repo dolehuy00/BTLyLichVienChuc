@@ -1,30 +1,28 @@
-﻿
-@{
-    ViewBag.Title = "Sơ yếu lý lịch";
-}
+﻿@model LyLichVienChuc.Models.VienChuc
+
 
 <div class="d-flex justify-content-end">
     <i>Mẫu HS02-VC/BNV ban hành kèm theo Thông tư số 07/2019/TT-BNV ngày 01/6/2019 của Bộ trưởng Bộ Nội vụ</i>
 </div>
-<form id="form-ly-lich-vien-chuc" method="post">
+<form id="form-ly-lich-vien-chuc">
     <div class="row">
         <div class="col">
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">Cơ quan quản lý viên chức</span>
-                <input type="text" id="co-quan-quan-ly" class="form-control" required>
+                <input type="text" id="co-quan-quan-ly" value="@Model.CoQuanQuanLy" class="form-control" required>
             </div>
         </div>
         <div class="col-4">
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">Số hiệu viên chức</span>
-                <input type="text" id="so-hieu-vien-chuc" class="form-control" required>
+                <input type="text" id="so-hieu-vien-chuc" value="@Model.SoHieuVienChuc" class="form-control" required>
             </div>
         </div>
     </div>
 
     <div class="input-group input-group-sm mb-3">
         <span class="input-group-text">Đơn vị sử dụng viên chức</span>
-        <input type="text" id="don-vi-su-dung-vien-chuc" class="form-control" required>
+        <input type="text" id="don-vi-su-dung-vien-chuc" value="@Model.CoQuanSuDung" class="form-control" required>
     </div>
 
     <div class="text-center">
@@ -33,35 +31,35 @@
 
     <div class="row">
         <div class="col-2 text-center">
-            <img class="rounded mx-auto d-block image-placeholder" id="img-anh-the" alt="Ảnh thẻ (4x6cm)" style="height: 6cm" src="~/Content/Images/default-avatar.png" />
-            <input type="file" id="input-anh-the" style="display: none" accept="image/jpeg, image/png"/>
+            <img class="rounded mx-auto d-block image-placeholder" id="img-anh-the" alt="Ảnh thẻ (4x6cm)" style="height: 6cm" src="data:image/png;base64,@Model.AnhThe" />
+            <input type="file" id="input-anh-the" style="display: none" accept="image/jpeg, image/png" />
         </div>
         <div class="col">
             <div class="row">
                 <div class="input-group input-group-sm mb-3">
                     <span class="input-group-text">1/ Họ và tên khai sinh (Viết chữ in hoa)</span>
-                    <input type="text" id="ho-ten-khai-sinh" class="form-control" required>
+                    <input type="text" id="ho-ten-khai-sinh" value="@Model.HoVaTen" class="form-control" required>
                 </div>
             </div>
             <div class="row">
                 <div class="input-group input-group-sm mb-3">
                     <span class="input-group-text">2/ Tên gọi khác</span>
-                    <input type="text" id="ten-khac" class="form-control">
+                    <input type="text" id="ten-khac" value="@Model.TenGoiKhac" class="form-control">
                 </div>
             </div>
             <div class="row">
                 <div class="col">
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text">3/ Ngày sinh</span>
-                        <input type="date" id="ngay-sinh" class="form-control" required>
+                        <input type="date" id="ngay-sinh" value="@Model.NgaySinh.ToString("yyyy-MM-dd")" class="form-control" required>
                     </div>
                 </div>
                 <div class="col">
                     <div class="btn-group btn-group-sm input-group-sm" role="group">
                         <span class="input-group-text">Giới tính</span>
-                        <input type="radio" class="btn-check" name="gender" id="vbtn-radio1" value="1" autocomplete="off" required>
+                        <input type="radio" class="btn-check" name="gender" id="vbtn-radio1" value="1" autocomplete="off" required @if (Model.GioiTinh) { <text> checked</text> }>
                         <label class="btn btn-outline-secondary btn-gender" for="vbtn-radio1">Nam</label>
-                        <input type="radio" class="btn-check" name="gender" id="vbtn-radio2" value="0" autocomplete="off" required>
+                        <input type="radio" class="btn-check" name="gender" id="vbtn-radio2" value="0" autocomplete="off" required @if (!Model.GioiTinh) { <text> checked</text> }>
                         <label class="btn btn-outline-secondary btn-gender" for="vbtn-radio2">Nữ</label>
                     </div>
                 </div>
@@ -70,19 +68,19 @@
                 <div class="col-5">
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text">4/ Nơi sinh: Tỉnh/Thành Phố</span>
-                        <input type="text" id="tinh-noi-sinh" class="form-control" required>
+                        <input type="text" id="tinh-noi-sinh" value="@Model.TinhNoiSinh" class="form-control" required>
                     </div>
                 </div>
                 <div class="col">
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text">Quận/Huyện</span>
-                        <input type="text" id="huyen-noi-sinh" class="form-control" required>
+                        <input type="text" id="huyen-noi-sinh" value="@Model.HuyenNoiSinh" class="form-control" required>
                     </div>
                 </div>
                 <div class="col">
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text">Xã/Phường</span>
-                        <input type="text" id="xa-noi-sinh" class="form-control" required>
+                        <input type="text" id="xa-noi-sinh" value="@Model.XaNoiSinh" class="form-control" required>
                     </div>
                 </div>
             </div>
@@ -90,19 +88,19 @@
                 <div class="col-5">
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text">5/ Quê quán: Tỉnh/Thành Phố</span>
-                        <input type="text" id="tinh-que-quan" class="form-control" required>
+                        <input type="text" id="tinh-que-quan" value="@Model.TinhQueQuan" class="form-control" required>
                     </div>
                 </div>
                 <div class="col">
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text">Quận/Huyện</span>
-                        <input type="text" id="huyen-que-quan" class="form-control" required>
+                        <input type="text" id="huyen-que-quan" value="@Model.HuyenQueQuan" class="form-control" required>
                     </div>
                 </div>
                 <div class="col">
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text">Xã/Phường</span>
-                        <input type="text" id="xa-que-quan" class="form-control">
+                        <input type="text" id="xa-que-quan" value="@Model.XaQueQuan" class="form-control">
                     </div>
                 </div>
             </div>
@@ -113,73 +111,73 @@
         <div class="col">
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">6/ Dân tộc</span>
-                <input type="text" id="dan-toc" class="form-control" required>
+                <input type="text" id="dan-toc" value="@Model.DanToc" class="form-control" required>
             </div>
         </div>
         <div class="col">
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">7/ Tôn giáo</span>
-                <input type="text" id="ton-giao" class="form-control" required>
+                <input type="text" id="ton-giao" value="@Model.TonGiao" class="form-control" required>
             </div>
         </div>
     </div>
 
     <div class="input-group input-group-sm mb-3">
         <span class="input-group-text">8/ Nơi đăng ký hộ khẩu thường trú</span>
-        <input type="text" id="ho-khau" class="form-control" required>
+        <input type="text" id="ho-khau" value="@Model.HoKhauThuongTru" class="form-control" required>
     </div>
 
     <div class="input-group input-group-sm mb-3">
         <span class="input-group-text">9/ Nơi ở hiện nay</span>
-        <input type="text" id="noi-o-hien-nay" class="form-control" required>
+        <input type="text" id="noi-o-hien-nay" value="@Model.NoiOHienNay" class="form-control" required>
     </div>
 
     <div class="input-group input-group-sm mb-3">
         <span class="input-group-text">10/ Nghề nghiệp khi được tuyển dụng</span>
-        <input type="text" id="nghe-nghiep" class="form-control" required>
+        <input type="text" id="nghe-nghiep" value="@Model.NgheNghiepKhiDuocTuyen" class="form-control" required>
     </div>
 
     <div class="row">
         <div class="col-3">
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">11/ Ngày tuyển dụng</span>
-                <input type="date" id="ngay-tuyen-dung" class="form-control" required>
+                <input type="date" id="ngay-tuyen-dung" value="@Model.NgayTuyenDung.ToString("yyyy-MM-dd")" class="form-control" required>
             </div>
         </div>
         <div class="col">
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">Cơ quan, đơn vị tuyển dụng</span>
-                <input type="text" id="co-quan-tuyen-dung" class="form-control" required>
+                <input type="text" id="co-quan-tuyen-dung" value="@Model.CoQuanTuyenDung" class="form-control" required>
             </div>
         </div>
     </div>
 
     <div class="input-group input-group-sm mb-3">
         <span class="input-group-text">12.1/ Chức danh (chức vụ) công tác hiện tại</span>
-        <input type="text" id="chuc-vu-hien-tai" class="form-control" required>
+        <input type="text" id="chuc-vu-hien-tai" value="@Model.ChucDanhHienTai" class="form-control" required>
     </div>
 
     <div class="input-group input-group-sm mb-3">
         <span class="input-group-text">12.2/ Chức danh (chức vụ) kiêm nhiệm</span>
-        <input type="text" id="chuc-vu-kiem-nhiem" class="form-control" required>
+        <input type="text" id="chuc-vu-kiem-nhiem" value="@Model.ChucDanhKiemNhiem" class="form-control" required>
     </div>
 
     <div class="input-group input-group-sm mb-3">
         <span class="input-group-text">13/ Công việc chính được giao</span>
-        <input type="text" id="cong-viec-chinh" class="form-control" required>
+        <input type="text" id="cong-viec-chinh" value="@Model.CongViecChinhDuocGiao" class="form-control" required>
     </div>
 
     <div class="row">
         <div class="col">
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">14/ Chức danh nghề nghiệp viên chức</span>
-                <input type="text" id="chuc-danh-nghe-nghiep" class="form-control" required>
+                <input type="text" id="chuc-danh-nghe-nghiep" value="@Model.ChucDanhNgheNghiep" class="form-control" required>
             </div>
         </div>
         <div class="col-4">
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">Mã số</span>
-                <input type="text" id="ma-so-chuc-danh-nghe-nghiep" class="form-control" required>
+                <input type="text" id="ma-so-chuc-danh-nghe-nghiep" value="@Model.MaSoChucDanhNgheNghiep" class="form-control" required>
             </div>
         </div>
     </div>
@@ -188,56 +186,56 @@
         <div class="col">
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">Bậc lương</span>
-                <input type="text" id="bac-luong-chuc-danh-nghe-nghiep" class="form-control" required>
+                <input type="text" id="bac-luong-chuc-danh-nghe-nghiep" value="@Model.BacLuong" class="form-control" required>
             </div>
         </div>
         <div class="col">
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">Hệ số</span>
-                <input type="text" id="he-so-luong-chuc-danh-nghe-nghiep" class="form-control" required>
+                <input type="text" id="he-so-luong-chuc-danh-nghe-nghiep" value="@Model.HeSoLuong" class="form-control" required>
             </div>
         </div>
         <div class="col-3">
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">Ngày hưởng</span>
-                <input type="date" id="ngay-huong-chuc-danh-nghe-nghiep" class="form-control" required>
+                <input type="date" id="ngay-huong-chuc-danh-nghe-nghiep" value="@Model.NgayHuongBacLuong.ToString("yyyy-MM-dd")" class="form-control" required>
             </div>
         </div>
         <div class="col-3">
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">Phụ cấp chức danh</span>
-                <input type="text" id="phu-cap-chuc-danh-nghe-nghiep" class="form-control" required>
+                <input type="text" id="phu-cap-chuc-danh-nghe-nghiep" value="@Model.PhuCapChucDanh" class="form-control" required>
             </div>
         </div>
         <div class="col-3">
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">Phụ cấp khác</span>
-                <input type="text" id="phu-cap-khac-chuc-danh-nghe-nghiep" class="form-control" required>
+                <input type="text" id="phu-cap-khac-chuc-danh-nghe-nghiep" value="@Model.PhuCapKhac" class="form-control" required>
             </div>
         </div>
     </div>
 
     <div class="input-group input-group-sm mb-3">
         <span class="input-group-text">15.1/ Trình độ giáo dục phổ thông (đã tốt nghiệp lớp mấy/thuộc hệ nào)</span>
-        <input type="text" id="trinh-do-giao-duc-pho-thong" class="form-control" required>
+        <input type="text" id="trinh-do-giao-duc-pho-thong" value="@Model.TrinhDoGiaoDucPhoThong" class="form-control" required>
     </div>
 
     <div class="input-group input-group-sm mb-3">
         <span class="input-group-text">15.2/ Trình độ chuyên môn cao nhất</span>
-        <input type="text" id="trinh-do-chuyen-mon-cao-nhat" class="form-control" required>
+        <input type="text" id="trinh-do-chuyen-mon-cao-nhat" value="@Model.TrinhDoChuyenMonCaoNhat" class="form-control" required>
     </div>
 
     <div class="row">
         <div class="col">
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">15.3/ Lý luận chính trị</span>
-                <input type="text" id="ly-luan-chinh-tri" class="form-control" required>
+                <input type="text" id="ly-luan-chinh-tri" value="@Model.TrinhDoLyLuanChinhTri" class="form-control" required>
             </div>
         </div>
         <div class="col">
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">15.4/ Quản lý nhà nước</span>
-                <input type="text" id="quan-ly-nha-nuoc" class="form-control" required>
+                <input type="text" id="quan-ly-nha-nuoc" value="@Model.TrinhDoQuanLyNhaNuoc" class="form-control" required>
             </div>
         </div>
     </div>
@@ -245,7 +243,7 @@
     <div class="col">
         <div class="input-group input-group-sm mb-3">
             <span class="input-group-text">15.5/ Trình độ nghiệp vụ theo chuyên ngành</span>
-            <input type="text" id="trinh-do-nghiep-vu-chuyen-nganh" class="form-control" required>
+            <input type="text" id="trinh-do-nghiep-vu-chuyen-nganh" value="@Model.TrinhDoNghiepVuChuyenNganh" class="form-control" required>
         </div>
     </div>
 
@@ -253,13 +251,13 @@
         <div class="col">
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">15.6/ Ngoại ngữ</span>
-                <input type="text" id="ngoai-ngu" class="form-control" required>
+                <input type="text" id="ngoai-ngu" value="@Model.TrinhDoNgoaiNgu" class="form-control" required>
             </div>
         </div>
         <div class="col">
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">15.7/ Tin học</span>
-                <input type="text" id="tin-hoc" class="form-control" required>
+                <input type="text" id="tin-hoc" value="@Model.TrinhDoTinHoc" class="form-control" required>
             </div>
         </div>
     </div>
@@ -268,79 +266,79 @@
         <div class="col">
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">16/ Ngày vào Đảng Cộng sản Việt Nam</span>
-                <input type="date" id="ngay-vao-dang" class="form-control" required>
+                <input type="date" id="ngay-vao-dang" value="@Model.NgayVaoDang.ToString("yyyy-MM-dd")" class="form-control" required>
             </div>
         </div>
         <div class="col">
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">Ngày chính thức</span>
-                <input type="date" id="ngaychinhthuc-vao-dang" class="form-control" required>
+                <input type="date" id="ngaychinhthuc-vao-dang" value="@Model.NgayChinhThucVaoDang.ToString("yyyy-MM-dd")" class="form-control" required>
             </div>
         </div>
     </div>
 
     <div class="input-group input-group-sm mb-3">
         <span class="input-group-text">17/ Ngày tham gia tổ chức chính trị - xã hội</span>
-        <input type="text" id="thamgia-tochuc-ctxh" class="form-control" required>
+        <input type="text" id="thamgia-tochuc-ctxh" value="@Model.ThamGiaToChucCTXH" class="form-control" required>
     </div>
 
     <div class="row">
         <div class="col-3">
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">18/ Ngày nhập ngũ</span>
-                <input type="date" id="ngay-nhapngu" class="form-control">
+                <input type="date" id="ngay-nhapngu" value="@Model.NgayNhapNgu.ToString("yyyy-MM-dd")" class="form-control">
             </div>
         </div>
         <div class="col-3">
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">Ngày xuất ngũ</span>
-                <input type="date" id="ngay-xuatngu" class="form-control">
+                <input type="date" id="ngay-xuatngu" value="@Model.NgayXuatNgu.ToString("yyyy-MM-dd")" class="form-control">
             </div>
         </div>
         <div class="col">
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">Quân hàm cao nhất</span>
-                <input type="text" id="quanham-caonhat" class="form-control">
+                <input type="text" id="quanham-caonhat" value="@Model.QuanHamCaoNhat" class="form-control">
             </div>
         </div>
     </div>
 
     <div class="input-group input-group-sm mb-3">
         <span class="input-group-text">19.1/ Danh hiệu được phong tặng cao nhất</span>
-        <input type="text" id="danhhieu-duocphong-caonhat" class="form-control">
+        <input type="text" id="danhhieu-duocphong-caonhat" value="@Model.DanhHieuDuocPhongTangCaoNhat" class="form-control">
     </div>
 
     <div class="row">
         <div class="col">
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">19.2/ Học hàm được phong (Giáo sư, Phó giáo sư)</span>
-                <input type="text" id="hocham-duocphong" class="form-control">
+                <input type="text" id="hocham-duocphong" value="@Model.HocHamDuocPhong" class="form-control">
             </div>
         </div>
         <div class="col">
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">Năm được phong</span>
-                <input type="number" id="nam-hocham-duocphong" class="form-control specific-input">
+                <input type="number" id="nam-hocham-duocphong" value="@Model.NamPhongHocHam" class="form-control specific-input">
             </div>
         </div>
     </div>
 
     <div class="input-group input-group-sm mb-3">
         <span class="input-group-text">20/ Sở trường công tác</span>
-        <input type="text" id="sotruong-congtac" class="form-control" required>
+        <input type="text" id="sotruong-congtac" value="@Model.SoTruongCongTac" class="form-control" required>
     </div>
 
     <div class="row">
         <div class="col">
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">21/ Khen thưởng</span>
-                <input type="text" id="khen-thuong" class="form-control">
+                <input type="text" id="khen-thuong" value="@Model.KhenThuongCaoNhat" class="form-control">
             </div>
         </div>
         <div class="col">
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">22/ Kỷ luật</span>
-                <input type="text" id="ky-luat" class="form-control">
+                <input type="text" id="ky-luat" value="@Model.KyLuat" class="form-control">
             </div>
         </div>
     </div>
@@ -349,20 +347,20 @@
         <div class="col">
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">23/ Tình trạng sức khỏe</span>
-                <input type="text" id="tinhtrang-suckhoe" class="form-control" required>
+                <input type="text" id="tinhtrang-suckhoe" value="@Model.TinhTrangSucKhoe" class="form-control" required>
             </div>
         </div>
         <div class="col-2">
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">Chiều cao</span>
-                <input type="number" id="chieu-cao" class="form-control specific-input" required>
+                <input type="number" id="chieu-cao" value="@Model.ChieuCao" class="form-control specific-input" required>
                 <span class="input-group-text">cm</span>
             </div>
         </div>
         <div class="col-2">
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">Cân nặng</span>
-                <input type="number" id="can-nang" class="form-control specific-input" required>
+                <input type="number" id="can-nang" value="@Model.CanNang" class="form-control specific-input" required>
                 <span class="input-group-text">kg</span>
             </div>
         </div>
@@ -371,10 +369,10 @@
                 <span class="input-group-text">Nhóm máu</span>
                 <select class="form-select form-select-sm" id="nhom-mau" aria-label=".form-select-sm example" required>
                     <option></option>
-                    <option value="O">O</option>
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="AB">AB</option>
+                    <option value="O" @if (Model.NhomMau == "O") { <text> selected</text>}>O</option>
+                    <option value="A" @if (Model.NhomMau == "A") { <text> selected</text>}>A</option>
+                    <option value="B" @if (Model.NhomMau == "B") { <text> selected</text>}>B</option>
+                    <option value="AB" @if (Model.NhomMau == "AB") { <text> selected</text>}>AB</option>
                 </select>
             </div>
         </div>
@@ -384,13 +382,13 @@
         <div class="col-3">
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">24/ Là thương binh hạng</span>
-                <input type="text" id="hang-thuongbinh" class="form-control">
+                <input type="text" id="hang-thuongbinh" value="@Model.LaThuongBinhHang" class="form-control">
             </div>
         </div>
         <div class="col">
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">Là con gia đình chính sách</span>
-                <input type="text" id="con-giadinh-chinhsach" class="form-control">
+                <input type="text" id="con-giadinh-chinhsach" value="@Model.ConGiaDinhChinhSach" class="form-control">
             </div>
         </div>
     </div>
@@ -399,19 +397,19 @@
         <div class="col">
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">25/ Căn cước công dân</span>
-                <input type="number" id="cancuoc-congdan" class="form-control specific-input" required>
+                <input type="number" id="cancuoc-congdan" value="@Model.SoCCCD" class="form-control specific-input" required>
             </div>
         </div>
         <div class="col-3">
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">Ngày cấp</span>
-                <input type="date" id="ngaycap-cccd" class="form-control" required>
+                <input type="date" id="ngaycap-cccd" value="@Model.NgayCapCCCD.ToString("yyyy-MM-dd")" class="form-control" required>
             </div>
         </div>
         <div class="col">
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">26/ Sổ BHXH</span>
-                <input type="text" id="so-bhxh" class="form-control" required>
+                <input type="text" id="so-bhxh" value="@Model.SoBHXH" class="form-control" required>
             </div>
         </div>
     </div>
@@ -433,9 +431,25 @@
                 </tr>
             </thead>
             <tbody>
+                @if (Model.DsThongTinDaoTaoBoiDuong != null)
+                {
+                    foreach (var daoTao in Model.DsThongTinDaoTaoBoiDuong)
+                    {
+                        <tr>
+                            <td><textarea class="form-control" required>@daoTao.TenTruong</textarea></td>
+                            <td><textarea class="form-control" required>@daoTao.ChuyenNganh</textarea></td>
+                            <td><textarea class="form-control" required>@daoTao.KhoangThoiGian</textarea></td>
+                            <td><textarea class="form-control" required>@daoTao.HinhThucDaoTao</textarea></td>
+                            <td><textarea class="form-control" required>@daoTao.VanBangChungChi</textarea></td>
+                            <td><button type="button" class="btn btn-danger">Xóa</button></td>
+                        </tr>
+                    }
+                }
+
+
             </tbody>
         </table>
-        <button id="btn-insert-table-27" type="button" class="btn btn-outline-dark btn-sm" style="width: 100%; --bs-btn-font-size: .75rem; margin-bottom: 1rem" >Thêm một hàng</button>
+        <button id="btn-insert-table-27" type="button" class="btn btn-outline-dark btn-sm" style="width: 100%; --bs-btn-font-size: .75rem; margin-bottom: 1rem">Thêm một hàng</button>
     </div>
 
 
@@ -459,6 +473,17 @@
                 </tr>
             </thead>
             <tbody>
+                @if (Model.DsQuaTrinhCongTac != null)
+                {
+                    foreach (var i in Model.DsQuaTrinhCongTac)
+                    {
+                        <tr>
+                            <td><textarea class="form-control" required>@i.KhoangThoiGian</textarea></td>
+                            <td><textarea class="form-control" required>@i.ChucDanh</textarea></td>
+                            <td><button type="button" class="btn btn-danger">Xóa</button></td>
+                        </tr>
+                    }
+                }
             </tbody>
         </table>
         <button id="btn-insert-table-28" type="button" class="btn btn-outline-dark btn-sm" style="width: 100%; --bs-btn-font-size: .75rem; margin-bottom: 1rem">Thêm một hàng</button>
@@ -473,7 +498,7 @@
             đã khai báo cho ai, những vấn đề gì? Bản thân có làm việc trong chế độ cũ (cơ quan, đơn vị nào, địa điểm,
             chức danh, chức vụ, thời gian làm việc…)
         </span>
-        <textarea style="height: 100px" id="lichsu-banthan" class="form-control"></textarea>
+        <textarea style="height: 100px" id="lichsu-banthan" class="form-control">@Model.LichSuBanThan</textarea>
     </div>
 
     <div class="container-textarea">
@@ -481,14 +506,14 @@
             - Tham gia hoặc có quan hệ với các tổ chức chính trị, kinh tế,
             xã hội nào ở nước ngoài (làm gì, tổ chức nào, đặt trụ sở ở đâu ..?)
         </span>
-        <textarea style="height: 100px" id="lichsu-thamgia-caccoquan-nuocngoai" class="form-control"></textarea>
+        <textarea style="height: 100px" id="lichsu-thamgia-caccoquan-nuocngoai" class="form-control">@Model.LichSuThamGiaCacCoQuanNuocNgoai</textarea>
     </div>
 
     <div class="container-textarea">
         <span>
             - Có thân nhân (Cha, Mẹ, Vợ, Chồng, con, anh chị em ruột) ở nước ngoài (làm gì, địa chỉ …)?
         </span>
-        <textarea style="height: 100px" id="thannhan-o-nuocngoai" class="form-control"></textarea>
+        <textarea style="height: 100px" id="thannhan-o-nuocngoai" class="form-control">@Model.ThanNhanONuocNgoai</textarea>
     </div>
 
     <div class="d-flex justify-content-start">
@@ -508,6 +533,22 @@
                 </tr>
             </thead>
             <tbody>
+                @if (Model.DsQuanHeGiaDinh != null)
+                {
+                    foreach (var i in Model.DsQuanHeGiaDinh)
+                    {
+                        if (i.LaTTQHGDCuaBanThan)
+                        {
+                            <tr>
+                                <td><textarea class="form-control" required>@i.MoiQuanHe</textarea></td>
+                                <td><textarea class="form-control" required>@i.HoVaTen</textarea></td>
+                                <td><textarea class="form-control" required>@i.NamSinh</textarea></td>
+                                <td><textarea class="form-control" required>@i.ThongTinKhac</textarea></td>
+                                <td><button type="button" class="btn btn-danger">Xóa</button></td>
+                            </tr>
+                        }
+                    }
+                }
             </tbody>
         </table>
         <button id="btn-insert-table-30a" type="button" class="btn btn-outline-dark btn-sm" style="width: 100%; --bs-btn-font-size: .75rem; margin-bottom: 1rem">Thêm một hàng</button>
@@ -529,6 +570,22 @@
                 </tr>
             </thead>
             <tbody>
+                @if (Model.DsQuanHeGiaDinh != null)
+                {
+                    foreach (var i in Model.DsQuanHeGiaDinh)
+                    {
+                        if (!i.LaTTQHGDCuaBanThan)
+                        {
+                            <tr>
+                                <td><textarea class="form-control" required>@i.MoiQuanHe</textarea></td>
+                                <td><textarea class="form-control" required>@i.HoVaTen</textarea></td>
+                                <td><textarea class="form-control" required>@i.NamSinh</textarea></td>
+                                <td><textarea class="form-control" required>@i.ThongTinKhac</textarea></td>
+                                <td><button type="button" class="btn btn-danger">Xóa</button></td>
+                            </tr>
+                        }
+                    }
+                }
             </tbody>
         </table>
         <button id="btn-insert-table-30b" type="button" class="btn btn-outline-dark btn-sm" style="width: 100%; --bs-btn-font-size: .75rem; margin-bottom: 1rem">Thêm một hàng</button>
@@ -551,6 +608,19 @@
                 </tr>
             </thead>
             <tbody>
+                @if (Model.DsQuaTrinhLuong != null)
+                {
+                    foreach (var i in Model.DsQuaTrinhLuong)
+                    {
+                        <tr>
+                            <td><input class="form-control" value="@i.ThangNam" required></td>
+                            <td><input class="form-control" value="@i.MaSo" required></td>
+                            <td><input class="form-control" value="@i.BacLuong" required></td>
+                            <td><input class="form-control" value="@i.HeSoLuong" required></td>
+                            <td><button type="button" class="btn btn-danger">Xóa</button></td>
+                        </tr>
+                    }
+                }
             </tbody>
         </table>
         <button id="btn-insert-table-31" type="button" class="btn btn-outline-dark btn-sm" style="width: 100%; --bs-btn-font-size: .75rem; margin-bottom: 1rem">Thêm một hàng</button>
@@ -560,7 +630,7 @@
         <div class="d-flex justify-content-start">
             <h6>32/ NHẬN XÉT, ĐÁNH GIÁ CỦA ĐƠN VỊ SỬ DỤNG VIÊN CHỨC</h6>
         </div>
-        <textarea style="height: 150px" id="nhan-xet" class="form-control" required></textarea>
+        <textarea style="height: 150px" id="nhan-xet" class="form-control" required>@Model.NhanXet</textarea>
     </div>
 
     <div class="form-check">
@@ -570,6 +640,5 @@
             khai trên đây là đúng sự thật.
         </label>
     </div>
-
-    <button id="send" type="submit" class="btn btn-primary">Hoàn tất</button>
+    <button id="btn-update" type="submit" value="@Model.Id" class="btn btn-primary">Lưu chỉnh sửa</button>
 </form>

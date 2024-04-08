@@ -2,7 +2,7 @@
 {
     using System.Data.Entity.Migrations;
 
-    public partial class InitialCreate : DbMigration
+    public partial class myMigration : DbMigration
     {
         public override void Up()
         {
@@ -146,18 +146,88 @@
                 })
                 .PrimaryKey(t => t.Id);
 
+            CreateTable(
+                "dbo.Blogs",
+                c => new
+                {
+                    Id = c.Int(nullable: false, identity: true),
+                })
+                .PrimaryKey(t => t.Id);
+
+            CreateTable(
+                "dbo.BlogHeaders",
+                c => new
+                {
+                    Id = c.Int(nullable: false, identity: true),
+                    BlogId = c.Int(nullable: false),
+                })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Blogs", t => t.BlogId)
+                .Index(t => t.BlogId);
+
+            CreateTable(
+                "dbo.BlogTags",
+                c => new
+                {
+                    Id = c.Int(nullable: false, identity: true),
+                    CreateBy = c.String(),
+                    BlogId = c.Int(nullable: false),
+                    TagId = c.Int(nullable: false),
+                })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Blogs", t => t.BlogId, cascadeDelete: true)
+                .ForeignKey("dbo.Tags", t => t.TagId, cascadeDelete: true)
+                .Index(t => t.BlogId)
+                .Index(t => t.TagId);
+
+            CreateTable(
+                "dbo.Tags",
+                c => new
+                {
+                    Id = c.Int(nullable: false, identity: true),
+                })
+                .PrimaryKey(t => t.Id);
+
+            CreateTable(
+                "dbo.TagBlogs",
+                c => new
+                {
+                    Tag_Id = c.Int(nullable: false),
+                    Blog_Id = c.Int(nullable: false),
+                })
+                .PrimaryKey(t => new { t.Tag_Id, t.Blog_Id })
+                .ForeignKey("dbo.Tags", t => t.Tag_Id, cascadeDelete: true)
+                .ForeignKey("dbo.Blogs", t => t.Blog_Id, cascadeDelete: true)
+                .Index(t => t.Tag_Id)
+                .Index(t => t.Blog_Id);
+
         }
 
         public override void Down()
         {
+            DropForeignKey("dbo.BlogTags", "TagId", "dbo.Tags");
+            DropForeignKey("dbo.TagBlogs", "Blog_Id", "dbo.Blogs");
+            DropForeignKey("dbo.TagBlogs", "Tag_Id", "dbo.Tags");
+            DropForeignKey("dbo.BlogTags", "BlogId", "dbo.Blogs");
+            DropForeignKey("dbo.BlogHeaders", "BlogId", "dbo.Blogs");
             DropForeignKey("dbo.QuanHeGiaDinhs", "VienChucId", "dbo.VienChucs");
             DropForeignKey("dbo.ThongTinDaoTaoBoiDuongs", "VienChucId", "dbo.VienChucs");
             DropForeignKey("dbo.QuaTrinhLuongs", "VienChucId", "dbo.VienChucs");
             DropForeignKey("dbo.QuaTrinhCongTacs", "VienChucId", "dbo.VienChucs");
+            DropIndex("dbo.TagBlogs", new[] { "Blog_Id" });
+            DropIndex("dbo.TagBlogs", new[] { "Tag_Id" });
+            DropIndex("dbo.BlogTags", new[] { "TagId" });
+            DropIndex("dbo.BlogTags", new[] { "BlogId" });
+            DropIndex("dbo.BlogHeaders", new[] { "BlogId" });
             DropIndex("dbo.ThongTinDaoTaoBoiDuongs", new[] { "VienChucId" });
             DropIndex("dbo.QuaTrinhLuongs", new[] { "VienChucId" });
             DropIndex("dbo.QuaTrinhCongTacs", new[] { "VienChucId" });
             DropIndex("dbo.QuanHeGiaDinhs", new[] { "VienChucId" });
+            DropTable("dbo.TagBlogs");
+            DropTable("dbo.Tags");
+            DropTable("dbo.BlogTags");
+            DropTable("dbo.BlogHeaders");
+            DropTable("dbo.Blogs");
             DropTable("dbo.Users");
             DropTable("dbo.ThongTinDaoTaoBoiDuongs");
             DropTable("dbo.QuaTrinhLuongs");

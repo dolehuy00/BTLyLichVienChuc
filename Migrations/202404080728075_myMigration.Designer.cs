@@ -7,13 +7,13 @@ namespace LyLichVienChuc.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class InitialCreate : IMigrationMetadata
+    public sealed partial class myMigration : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialCreate));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(myMigration));
         
         string IMigrationMetadata.Id
         {
-            get { return "202403250550432_InitialCreate"; }
+            get { return "202404080728075_myMigration"; }
         }
         
         string IMigrationMetadata.Source

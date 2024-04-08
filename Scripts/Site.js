@@ -6,11 +6,31 @@ $(document).ready(function () {
     addEventAddAndDeleteRowForTable('table-28', 'btn-insert-table-28', 'wrapper-table-28', 2, 'textarea');
     addEventAddAndDeleteRowForTable('table-27', 'btn-insert-table-27', 'wrapper-table-27', 5, 'textarea');
 
+    $('#table-27 .btn-danger').click(function () {
+        // Xóa hàng cha của nút "Xóa" được click
+        $(this).closest('tr').remove();
+    });
+    $('#table-28 .btn-danger').click(function () {
+        // Xóa hàng cha của nút "Xóa" được click
+        $(this).closest('tr').remove();
+    });
+    $('#table-30a .btn-danger').click(function () {
+        // Xóa hàng cha của nút "Xóa" được click
+        $(this).closest('tr').remove();
+    });
+    $('#table-30b .btn-danger').click(function () {
+        // Xóa hàng cha của nút "Xóa" được click
+        $(this).closest('tr').remove();
+    });
+    $('#table-31 .btn-danger').click(function () {
+        // Xóa hàng cha của nút "Xóa" được click
+        $(this).closest('tr').remove();
+    });
 
     // Ảnh thẻ
     var input = document.getElementById('input-anh-the');
     var img = document.getElementById('img-anh-the');
-    var imageBase64 = ''
+    var imageBase64 = img.getAttribute('src').split(',')[1];
     img.addEventListener("click", function (event) {
         event.preventDefault();
         input.click();
@@ -28,21 +48,73 @@ $(document).ready(function () {
         }
     });
 
-    // submit form
+    // submit form add
     document.getElementById("form-ly-lich-vien-chuc").addEventListener("submit", function (event) {
         event.preventDefault();
-        var img = document.getElementById('img-anh-the');
-        if (imageBase64 === '') {
-            img.scrollIntoView({
-                behavior: "smooth",
-                block: "center"
+        var clickedButtonId = event.submitter.id;
+        if (clickedButtonId === 'send') {
+            var img = document.getElementById('img-anh-the');
+            if (!imageBase64) {
+                img.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                });
+                img.style.border = "3px solid red";
+            } else {
+                img.style.border = "2px solid gray";
+                var data = buildData(imageBase64);
+                $.ajax({
+                    url: '/api/VienChucApi',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(data),
+                    success: function (response) {
+                        console.log('Dữ liệu đã được gửi thành công!');
+                        console.log('Phản hồi từ server:', response);
+                        window.location.href = '/Home/Details/' + response.Id;
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Lỗi trong quá trình gửi dữ liệu:', error);
+                    }
+                });
+            }
+        } else if (clickedButtonId === 'btn-update') {
+            var data = buildData(imageBase64);
+            var id = event.submitter.value
+            data["id"] = id;
+            data.dsQuanHeGiaDinh.forEach(function (currentValue, index, array) {
+                currentValue["vienChucId"] = Number(id);
             });
-            img.style.border = "3px solid red";
-        } else {
-            img.style.border = "2px solid gray";
-            submitForm(imageBase64);
+            data.dsQuaTrinhCongTac.forEach(function (currentValue, index, array) {
+                currentValue["vienChucId"] = Number(id);
+            });
+            data.dsQuaTrinhLuong.forEach(function (currentValue, index, array) {
+                currentValue["vienChucId"] = Number(id);
+            });
+            data.dsThongTinDaoTaoBoiDuong.forEach(function (currentValue, index, array) {
+                currentValue["vienChucId"] = Number(id);
+            });
+            $.ajax({
+                url: '/api/VienChucApi/' + id,
+                type: 'PUT',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                success: function (response) {
+                    console.log('Dữ liệu đã được gửi thành công!');
+                    console.log('Phản hồi từ server:', response);
+                    // Chuyển hướng đến trang web mới
+                    window.location.href = '/Home/Details/' + id;
+                },
+                error: function (xhr, status, error) {
+                    console.error('Lỗi trong quá trình gửi dữ liệu:', error);
+                }
+            });
         }
+        
     });
+
+
+
     // ô nhập tên
     document.getElementById('ho-ten-khai-sinh').addEventListener('input', function (event) {
         // Chuyển đổi giá trị của ô input thành chữ in hoa
@@ -184,7 +256,7 @@ function tabel30DataToJson(tableId, laTTQHGDCuaBanThan) {
 }
 
 
-function submitForm(imgBase64) {
+function buildData(imgBase64) {
     var data = {
         "anhThe": imgBase64,
         "coQuanQuanLy": document.getElementById('co-quan-quan-ly').value,
@@ -254,18 +326,5 @@ function submitForm(imgBase64) {
         "dsQuanHeGiaDinh": tabel30DataToJson('table-30a', true).concat(tabel30DataToJson('table-30b', false)),
         "dsQuaTrinhLuong": tabel31DataToJson('table-31')
     }
-
-    $.ajax({
-        url: '/api/VienChucApi',
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(data),
-        success: function (response) {
-            console.log('Dữ liệu đã được gửi thành công!');
-            console.log('Phản hồi từ server:', response);
-        },
-        error: function (xhr, status, error) {
-            console.error('Lỗi trong quá trình gửi dữ liệu:', error);
-        }
-    });
+    return data;
 }

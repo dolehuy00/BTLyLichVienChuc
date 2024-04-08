@@ -7,7 +7,6 @@
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "LyLichVienChuc.Data.LLVCContext";
         }
 
         protected override void Seed(LyLichVienChuc.Data.LLVCContext context)

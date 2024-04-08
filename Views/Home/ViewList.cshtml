@@ -1,0 +1,33 @@
+﻿@model List<LyLichVienChuc.Models.VienChuc>
+
+@{
+    ViewBag.Title = "ViewList";
+}
+
+<h2>ViewList</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Họ và tên</th>
+            <th scope="col">Ngày sinh</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var vienChuc in @Model)
+        {
+        <tr>
+            <th scope="row">@vienChuc.Id</th>
+            <td>@vienChuc.HoVaTen</td>
+            <td>@vienChuc.NgaySinh.ToString("dd/MM/yyyy")</td>
+            <td><a href="@Url.Action("Update", "Home")/@vienChuc.Id">Chỉnh sửa</a></td>
+            <td><a href="@Url.Action("Details", "Home")/@vienChuc.Id">Chi tiết</a></td>
+            <td><a href="@Url.Action("Delete", "Home")/@vienChuc.Id">Xóa</a></td>
+        </tr>
+        }
+    </tbody>
+</table>

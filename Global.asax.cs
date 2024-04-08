@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using LyLichVienChuc.App_Start;
+using Newtonsoft.Json;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -15,6 +16,7 @@ namespace LyLichVienChuc
             // Cấu hình JsonSerializer
             var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
             json.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            AutoMapperConfig.RegisterMappings();
         }
     }
 }

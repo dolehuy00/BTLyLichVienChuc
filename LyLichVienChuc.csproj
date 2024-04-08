@@ -44,6 +44,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>packages\AutoMapper.10.1.1\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -146,6 +149,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -155,18 +159,18 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202403250550432_InitialCreate.cs" />
-    <Compile Include="Migrations\202403250550432_InitialCreate.designer.cs">
-      <DependentUpon>202403250550432_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202403250648089_TenMigration.cs" />
-    <Compile Include="Migrations\202403250648089_TenMigration.designer.cs">
-      <DependentUpon>202403250648089_TenMigration.cs</DependentUpon>
+    <Compile Include="Migrations\202404080728075_myMigration.cs" />
+    <Compile Include="Migrations\202404080728075_myMigration.designer.cs">
+      <DependentUpon>202404080728075_myMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Blog.cs" />
+    <Compile Include="Models\BlogHeader.cs" />
+    <Compile Include="Models\BlogTag.cs" />
     <Compile Include="Models\QuanHeGiaDinh.cs" />
     <Compile Include="Models\QuaTrinhCongTac.cs" />
     <Compile Include="Models\QuaTrinhLuong.cs" />
+    <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\ThongTinDaoTaoBoiDuong.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\VienChuc.cs" />
@@ -181,6 +185,9 @@
     <Content Include="Scripts\jquery-3.7.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.7.1.min.map" />
     <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\Home\ViewList.cshtml" />
+    <Content Include="Views\Home\Details.cshtml" />
+    <Content Include="Views\Home\Update.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -188,13 +195,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202403250550432_InitialCreate.resx">
-      <DependentUpon>202403250550432_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202403250648089_TenMigration.resx">
-      <DependentUpon>202403250648089_TenMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202404080728075_myMigration.resx">
+      <DependentUpon>202404080728075_myMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
